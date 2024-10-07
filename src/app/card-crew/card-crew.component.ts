@@ -152,7 +152,7 @@ export class CardCrewComponent implements OnInit {
   }
 
   onColabCrew(){
-
+    window.open('https://colab.research.google.com/drive/1AQ3bLUxwU4Oc1Ksgs6GIoAF2e5KafGSr?usp=sharing', '_blank');
   }
 
 

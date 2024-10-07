@@ -110,7 +110,7 @@ export class PageHomeComponent {
 
   constructor( public router: Router, private http: ApisService, private _bottomSheet: MatBottomSheet,  private dialog: MatDialog) { }
 
-  allTools: string[] = ['Google', 'LeitorDeArquivo', 'LeitorDePasta'];
+  allTools: string[] = ['search_tool', 'scrape_tool', 'file_tool', 'mdx_search_tool', 'directory_tool'];
 
   agents:Agent[]=[];
   tasks:Task[]=[];
@@ -175,7 +175,7 @@ export class PageHomeComponent {
       planning: false,
       memory: false,
       process: 'sequential',
-      inputs: '{"texto": "The book is on the table."',
+      inputs: '{"texto": "The book is on the table."}',
       allAgents: this.getAgents(),
       allTasks: this.getTasks(),
       allTools: this.allTools,
@@ -442,19 +442,21 @@ getTasks(){
   }
 
   handleCopyCrew(crew: Crew) {
+    const reqCode = this.createRequirementsCode();
     const agentsCode = this.createAgentsCode();
     const tasksCode = this.createTasksCode();
     const crewsCode = this.createCrewsCode(crew);
-    const text = agentsCode + tasksCode + crewsCode;
+    const text = reqCode + agentsCode + tasksCode + crewsCode;
     console.log(crew);
     this.copyToClipboard(text);
   }
 
   handleDownloadCrew(crew: Crew){
+    const reqCode = this.createRequirementsCode();
     const agentsCode = this.createAgentsCode();
     const tasksCode = this.createTasksCode();
     const crewsCode = this.createCrewsCode(crew);
-    const text = agentsCode + tasksCode + crewsCode;
+    const text =  reqCode + agentsCode + tasksCode + crewsCode;
     console.log(crew);
     const blob = new Blob([text], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
@@ -465,6 +467,47 @@ getTasks(){
     window.URL.revokeObjectURL(url); // Libera o objeto do URL após o download
   }
 
+  createRequirementsCode(){
+    let result = '';
+    result+= `
+#!pip install crewai==0.28.8 crewai_tools==0.1.6 langchain_community==0.0.29
+
+# Controla avisos
+import warnings
+warnings.filterwarnings('ignore')
+
+# Importa Crew AI
+from crewai import Agent, Task, Crew
+from crewai.process import Process
+
+# Define a chave e modelo de LLM
+import os
+os.environ['OPENAI_API_KEY'] = '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'
+os.environ["OPENAI_MODEL_NAME"] = 'gpt-4o-mini'
+
+# Instancia as ferramentas
+os.environ["SERPER_API_KEY"] = ''
+
+from crewai_tools import (
+  FileReadTool,
+  ScrapeWebsiteTool,
+  MDXSearchTool,
+  SerperDevTool,
+  DirectorySearchTool
+)
+
+os.makedirs('./dir', exist_ok=True)
+open('./output.md', 'w').close()
+open('./search.md', 'w').close()
+
+search_tool = SerperDevTool()
+scrape_tool = ScrapeWebsiteTool()
+file_tool = FileReadTool(file_path='./output.md')
+mdx_search_tool = MDXSearchTool(mdx='./search.md')
+directory_tool = DirectorySearchTool(directory='./dir')
+`
+    return result;
+  }
 
   createAgentsCode(){
     const ident = "    ";
@@ -505,7 +548,7 @@ getTasks(){
       arr.push(this.normalizeToCamelCase(task.name) + ' = Task(');
       arr.push(ident + "description='" + task.description + "',");
       arr.push(ident + "expected_output='" + task.expectedOutput + "',");
-      arr.push(ident + "agent='" + task.agent + "',");
+      arr.push(ident + "agent=" + task.agent + ",");
       if (task.tools.length != 0)
       {
         let tools = "";
@@ -526,7 +569,7 @@ getTasks(){
           tasks = tasks.replace(',]', ']');
           arr.push( ident+tasks);
         }else{
-          arr.push(ident+ 'context=[]');
+          arr.push(ident+ 'context=[],');
         }
 
 

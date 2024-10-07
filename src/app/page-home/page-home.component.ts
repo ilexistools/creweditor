@@ -19,7 +19,7 @@ import { CardTaskComponent } from '../card-task/card-task.component';
 import { CardCrewComponent } from '../card-crew/card-crew.component';
 import { MatDialog } from '@angular/material/dialog';
 import { InputDialogComponent } from '../input-dialog/input-dialog.component';
-import { GlobalVariablesService } from '../global-variables.service';
+
 
 import {
   MatBottomSheet,
@@ -45,7 +45,6 @@ export interface Task {
   id: number;
   name: string;
   agent: string;
-  agents: string[];
   description: string;
   expectedOutput: string;
   context: string;
@@ -109,7 +108,7 @@ export interface Crew{
 })
 export class PageHomeComponent {
 
-  constructor( public router: Router, private http: ApisService, private _bottomSheet: MatBottomSheet,  private dialog: MatDialog, public globalVars: GlobalVariablesService) { }
+  constructor( public router: Router, private http: ApisService, private _bottomSheet: MatBottomSheet,  private dialog: MatDialog) { }
 
   allTools: string[] = ['Google', 'LeitorDeArquivo', 'LeitorDePasta'];
 
@@ -280,7 +279,6 @@ dialogRef.afterClosed().subscribe(result => {
       id: this.tasks.length + 1,
       name: result,
       agent: '',
-      agents: [],
       description: '',
       expectedOutput: '',
       context: '',
@@ -529,36 +527,13 @@ getTasks(){
 
   }
 
-  CreateImportsCode(){
-    let arr = [];
-    arr.push(" # Warning control");
-    arr.push("import warnings");
-    arr.push("warnings.filterwarnings('ignore')");
-    arr.push("import os");
-    arr.push("from crewai import Agent, Task, Crew");
-    arr.push("")
-    let result = '# Importar\n\n' + arr.join('\n') + '\n';
-    return result;
-
-  }
-
-  CreateToolsCode(){
-    let arr = [];
-    arr.push("docs_tool = DirectoryReadTool(directory='./blog-posts')");
-    arr.push("file_tool = FileReadTool()");
-    arr.push("search_tool = SerperDevTool()");
-    arr.push("web_rag_tool = WebsiteSearchTool()");
-    arr.push("")
-    let result = '# Instantiate tools\n\n' + arr.join('\n') + '\n';
-    return result;
-  }
+  
 
    copyToClipboard() {
     this.updateChipsData();
-    const tools = this.CreateToolsCode();
     const agentsCode = this.createAgentsCode();
     const tasksCode = this.createTasksCode();
-    const text = tools + agentsCode + tasksCode
+    const text = agentsCode + tasksCode
     navigator.clipboard.writeText(text)
       .then(() => {
         console.log('Texto copiado para a área de transferência');

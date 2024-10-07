@@ -18,7 +18,6 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import { GlobalVariablesService } from '../global-variables.service';
 import {MatSelectModule} from '@angular/material/select';
 
 @Component({
@@ -71,7 +70,7 @@ export class CardTaskComponent implements OnInit {
 
   announcer = inject(LiveAnnouncer);
 
-  constructor(public globalVars: GlobalVariablesService) {
+  constructor() {
     this.filteredTools = this.toolCtrl.valueChanges.pipe(
       startWith(null),
       map((tool: string | null) => tool ? this._filter(tool) : this.allTools.slice())
@@ -126,7 +125,7 @@ export class CardTaskComponent implements OnInit {
 
  
   update(){
-    this.allTasks = this.globalVars.allTasks;
+    
     this.filteredTasks = this.taskCtrl.valueChanges.pipe(
       startWith(''),
       map((task: string | null) => task ? this._filterTask(task) : this.allTasks.slice())

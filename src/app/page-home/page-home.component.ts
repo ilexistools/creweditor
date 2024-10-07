@@ -563,7 +563,7 @@ directory_tool = DirectorySearchTool(directory='./dir')
           let tasks = "";
           tasks += "context=["
           for (const t of task.tasks){
-            tasks+= "'" + t + "',";
+            tasks+="" + t + ",";
           }
           tasks+="],";
           tasks = tasks.replace(',]', ']');

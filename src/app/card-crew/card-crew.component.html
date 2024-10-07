@@ -87,9 +87,9 @@
         <textarea matInput placeholder="Insira o JSON aqui" [(ngModel)]="data.inputs" (ngModelChange)="validateJson()"></textarea>
         <mat-hint align="end" *ngIf="jsonError" style="color: red;">JSON inválido</mat-hint>
 
-       
+
       </mat-form-field>
-    
+
       <!-- Processo Selection -->
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <mat-label style="color: gray; margin-bottom: 8px;">Processo:</mat-label>
@@ -98,19 +98,21 @@
         <mat-radio-button value="hierarchical" style="display: block;">Hierárquico</mat-radio-button>
       </mat-radio-group>
     </div>
-  
- 
 
-      
+
       <mat-checkbox [(ngModel)]="data.planning">Habilitar planejamento</mat-checkbox>
       <mat-checkbox [(ngModel)]="data.memory">Habilitar memória</mat-checkbox>
 
-    
-      
-       
-      
-
-
+      <mat-divider></mat-divider>
     </div>
+
   </mat-card-content>
+
+  <div  [hidden]="isCollapsed">
+    <mat-card-actions >
+        <button mat-button (click)="onCopyCrew()">COPIAR</button>
+        <button mat-button>BAIXAR</button>
+    </mat-card-actions>
+  </div>
+
 </mat-card>

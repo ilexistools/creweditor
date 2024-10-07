@@ -4,39 +4,39 @@
         <mat-icon mat-card-avatar style="color: #fd9118" >assignment_turned_in</mat-icon>
         <mat-card-title style="margin-left: 8px;">{{data.name}}</mat-card-title>
       </div>
-      
+
       <button mat-icon-button (click)="isCollapsed = !isCollapsed">
       <mat-icon >{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
     </button>
-  
+
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
       </button>
-      
+
       <mat-menu #menu="matMenu">
-  
-        
-  
+
+
+
         <button mat-menu-item (click)="onUp();update()">
           <mat-icon>arrow_upwards</mat-icon>
           <span>Subir</span>
         </button>
-  
+
         <button mat-menu-item (click)="onDown()">
           <mat-icon>arrow_downward</mat-icon>
           <span>Descer</span>
         </button>
-  
-       
+
+
         <button mat-menu-item (click)="onDelete()">
           <mat-icon>delete</mat-icon>
           <span>Excluir</span>
         </button>
-       
+
       </mat-menu>
-      
-   
-   
+
+
+
     </mat-card-header>
     <mat-card-content style="margin-top: 15px;">
       <div [hidden]="isCollapsed">
@@ -49,22 +49,22 @@
             }
           </mat-select>
         </mat-form-field>
-       
+
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>Descrição da tarefa</mat-label>
           <textarea matInput placeholder="" [(ngModel)]="data.description"></textarea>
         </mat-form-field>
-  
+
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label>Saída esperada</mat-label>
           <textarea matInput placeholder="" [(ngModel)]="data.expectedOutput"></textarea>
         </mat-form-field>
 
-       
-       
 
-     
-      
+
+
+
+
       <!-- Tasks Section -->
       <form>
         <mat-form-field class="task-chip-list">
@@ -89,7 +89,7 @@
         </mat-form-field>
       </form>
 
-       
+
     <!-- Tools Section -->
         <form>
           <mat-form-field class="task-chip-list">
@@ -119,6 +119,7 @@
         <mat-checkbox [(ngModel)]="data.human">Humano revisa</mat-checkbox>
       </div>
     </mat-card-content>
-    
+
+
+
   </mat-card>
-  

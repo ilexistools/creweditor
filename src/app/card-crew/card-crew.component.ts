@@ -18,6 +18,7 @@ import { map, startWith } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-card-crew',
@@ -36,7 +37,8 @@ import {MatRadioModule} from '@angular/material/radio';
     AsyncPipe,
     CommonModule,
     MatMenuModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDividerModule
   ],
   templateUrl: './card-crew.component.html',
   styleUrls: ['./card-crew.component.css']
@@ -47,11 +49,12 @@ export class CardCrewComponent implements OnInit {
   @Output() deleteCrew = new EventEmitter<any>();
   @Output() goUp = new EventEmitter<any>();
   @Output() goDown = new EventEmitter<any>();
+  @Output() copyCrew =  new EventEmitter<any>();
 
   isCollapsed: boolean = false;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  
+
   agentCtrl = new FormControl('');
   filteredAgents: Observable<string[]>;
   allAgents: string[] = [];
@@ -77,14 +80,14 @@ export class CardCrewComponent implements OnInit {
     );
   }
 
- 
+
 
   // Método para validar o JSON
   jsonError: boolean = false;
 
-  
 
-  
+
+
   validateJson(): void {
     if (this.data.inputs.length!=0)
     {
@@ -95,12 +98,12 @@ export class CardCrewComponent implements OnInit {
         this.jsonError = true;  // Se houver erro, exibe a mensagem de erro
       }
     }else{
-      this.jsonError = false;  
+      this.jsonError = false;
     }
-    
+
   }
 
- 
+
 
 
 
@@ -138,6 +141,12 @@ export class CardCrewComponent implements OnInit {
   onDown() {
     this.goDown.emit(this.data);
   }
+
+  onCopyCrew(){
+    this.copyCrew.emit(this.data);
+  }
+
+
 
   addAgent(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -219,19 +228,19 @@ export class CardCrewComponent implements OnInit {
   public updateChipsSource(newAgents: string[], newTasks: string[]): void {
     this.allAgents = newAgents;
     this.allTasks = newTasks;
-  
+
     // Recalcula os observables filtrados
     this.filteredAgents = this.agentCtrl.valueChanges.pipe(
       startWith(''),
       map((agent: string | null) => (agent ? this._filterAgent(agent) : this.allAgents.slice())),
     );
-  
+
     this.filteredTasks = this.taskCtrl.valueChanges.pipe(
       startWith(''),
       map((task: string | null) => (task ? this._filterTask(task) : this.allTasks.slice())),
     );
   }
-  
+
 
 
 }

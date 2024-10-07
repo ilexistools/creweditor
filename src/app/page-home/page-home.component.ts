@@ -364,8 +364,6 @@ getTasks(){
     this.updateChipsData();
   }
 
-
-
   handleAgentUp(agent: Agent) {
   // Encontrar o índice do agente na lista de agentes
   const index = this.agents.findIndex(a => a === agent);
@@ -454,6 +452,12 @@ getTasks(){
   this.crews[index] = temp;
   this.crews[index + 1].order += 1;
   this.crews[index].order -= 1;
+  }
+
+  handleCopyCrew(crew: Crew) {
+   // this.crews = this.crews.filter(a => a.id !== crew.id);
+    //this.updateChipsData();
+    console.log(crew);
   }
 
 

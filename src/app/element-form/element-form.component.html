@@ -1,0 +1,327 @@
+
+<div class="elements-container" *ngIf="showElements">
+  <app-element title="ELEMENTO 1" [isChecked]="isChecked1" [isDisabled]="isChecked1" (onClick)="goToForm('1')"></app-element>
+  <app-element title="ELEMENTO 2" [isChecked]="isChecked2" [isDisabled]="isChecked2" (onClick)="goToForm('2')"></app-element>
+  <app-element title="ELEMENTO 3" [isChecked]="false" [isDisabled]="false"  (onClick)="goToForm('3')"></app-element>
+  <app-element title="ELEMENTO 4" [isChecked]="false" [isDisabled]="false" (onClick)="goToForm('4')"></app-element>
+  <app-element title="ELEMENTO 5" [isChecked]="false" [isDisabled]="false" (onClick)="goToForm('5')"></app-element>
+  <app-element title="ELEMENTO 6" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 7" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 8" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 9" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 10" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 11" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 12" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 13" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 14" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 15" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 16" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 17" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 18" [isChecked]="false" [isDisabled]="false" ></app-element>
+  <app-element title="ELEMENTO 19" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 20" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 21" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 22" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 23" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 24" [isChecked]="false" [isDisabled]="false"></app-element>
+  <app-element title="ELEMENTO 25" [isChecked]="false" [isDisabled]="false"></app-element>
+</div>
+
+<mat-stepper [linear]="false"  #stepper [selectedIndex]="currentStepIndex"   *ngIf="showForm">
+    <mat-step [editable]="true" disableRipple>
+    
+        <ng-template matStepLabel>ELEMENTO 1</ng-template>
+       <div class="container">
+            <div class="column">
+                <mat-radio-group  [(ngModel)]="agreeA" >
+                    <mat-radio-button [value]="true">CONCORDO</mat-radio-button>
+                    <mat-radio-button [value]="false" style="margin-left: 10px;">DISCORDO</mat-radio-button>
+                  </mat-radio-group>
+                  <div style="margin-top: 10px;" *ngIf="!agreeA">
+                    <p>Informe os detalhes da escolha:</p>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Motivo</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="explainA" ></textarea>
+                  </mat-form-field>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Sugestão de nova redação</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="suggestA" ></textarea>
+                  </mat-form-field>
+                </div>
+            </div>
+            <div class="column" style="display: flex; justify-content: center; align-items: center;">
+                <mat-card style="width: 80%;">
+                    <mat-card-header>
+                      <mat-card-title>{{titleA}}</mat-card-title>
+                      <mat-card-subtitle>Redação</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{textA}}</p>
+                    </mat-card-content>
+                  </mat-card>
+            </div>
+          </div>
+        <div>
+            <button mat-raised-button color="primary" (click)="goToElements()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="validateStepA()">Próximo</button>
+        </div>
+    
+    </mat-step>
+
+    <mat-step [editable]="true" disableRipple>
+     
+        <ng-template matStepLabel>ATUAÇÃO INICIAL
+            <small style="display: block; font-size: smaller; color: gray;">Exploratória</small>
+        </ng-template>
+       
+        <div class="container">
+          <div class="column">
+              <mat-radio-group  [(ngModel)]="agreeB" >
+                  <mat-radio-button [value]="true">CONCORDO</mat-radio-button>
+                  <mat-radio-button [value]="false" style="margin-left: 10px;">DISCORDO</mat-radio-button>
+                </mat-radio-group>
+                <div style="margin-top: 10px;" *ngIf="!agreeB">
+                  <p>Informe os detalhes da escolha:</p>
+                <mat-form-field style="width: 99%;">
+                  <mat-label>Motivo</mat-label>
+                  <textarea matInput placeholder="" maxlength="200" [(ngModel)]="explainB" ></textarea>
+                </mat-form-field>
+                <mat-form-field style="width: 99%;">
+                  <mat-label>Sugestão de nova redação</mat-label>
+                  <textarea matInput placeholder="" maxlength="200" [(ngModel)]="suggestB" ></textarea>
+                </mat-form-field>
+              </div>
+          </div>
+          <div class="column" style="display: flex; justify-content: center; align-items: center;">
+              <mat-card style="width: 80%;">
+                  <mat-card-header>
+                    <mat-card-title>{{titleB}}</mat-card-title>
+                    <mat-card-subtitle>Redação</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                      <p>{{textB}}</p>
+                  </mat-card-content>
+                </mat-card>
+          </div>
+        </div>
+      <div>
+          <button mat-raised-button color="primary" (click)="goPreviousStep()">Voltar</button>
+          <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="validateStepB()">Próximo</button>
+      </div>
+  
+    </mat-step>
+
+    <mat-step [editable]="true" disableRipple>
+          <ng-template matStepLabel>ATUAÇÃO BÁSICA 
+            <small style="display: block; font-size: smaller; color: gray;">Fundamental</small>
+          </ng-template>
+         
+          <div class="container">
+            <div class="column">
+                <mat-radio-group  [(ngModel)]="agreeC" >
+                    <mat-radio-button [value]="true">CONCORDO</mat-radio-button>
+                    <mat-radio-button [value]="false" style="margin-left: 10px;">DISCORDO</mat-radio-button>
+                  </mat-radio-group>
+                  <div style="margin-top: 10px;" *ngIf="!agreeC">
+                    <p>Informe os detalhes da escolha:</p>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Motivo</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="explainC" ></textarea>
+                  </mat-form-field>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Sugestão de nova redação</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="suggestC" ></textarea>
+                  </mat-form-field>
+                </div>
+            </div>
+            <div class="column" style="display: flex; justify-content: center; align-items: center;">
+                <mat-card style="width: 80%;">
+                    <mat-card-header>
+                      <mat-card-title>{{titleC}}</mat-card-title>
+                      <mat-card-subtitle>Redação</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{textC}}</p>
+                    </mat-card-content>
+                  </mat-card>
+            </div>
+          </div>
+        <div>
+            <button mat-raised-button color="primary" (click)="goPreviousStep()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="validateStepC()">Próximo</button>
+        </div>
+      </mat-step>
+
+
+      <mat-step [editable]="true" disableRipple>
+          <ng-template matStepLabel>ATUAÇÃO COLABORATIVA 
+            <small style="display: block; font-size: smaller; color: gray;">Propositiva</small>
+          </ng-template>
+          <div class="container">
+            <div class="column">
+                <mat-radio-group  [(ngModel)]="agreeD" >
+                    <mat-radio-button [value]="true">CONCORDO</mat-radio-button>
+                    <mat-radio-button [value]="false" style="margin-left: 10px;">DISCORDO</mat-radio-button>
+                  </mat-radio-group>
+                  <div style="margin-top: 10px;" *ngIf="!agreeD">
+                    <p>Informe os detalhes da escolha:</p>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Motivo</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="explainD" ></textarea>
+                  </mat-form-field>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Sugestão de nova redação</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="suggestD" ></textarea>
+                  </mat-form-field>
+                </div>
+            </div>
+            <div class="column" style="display: flex; justify-content: center; align-items: center;">
+                <mat-card style="width: 80%;">
+                    <mat-card-header>
+                      <mat-card-title>{{titleD}}</mat-card-title>
+                      <mat-card-subtitle>Redação</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{textD}}</p>
+                    </mat-card-content>
+                  </mat-card>
+            </div>
+          </div>
+        <div>
+            <button mat-raised-button color="primary" (click)="goPreviousStep()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="validateStepD()">Próximo</button>
+        </div>
+      </mat-step>
+
+      <mat-step [editable]="true" disableRipple>
+          <ng-template matStepLabel>ATUAÇÃO AUTORAL
+            <small style="display: block; font-size: smaller; color: gray;">Inovadora</small>
+          </ng-template>
+         
+          <div class="container">
+            <div class="column">
+                <mat-radio-group  [(ngModel)]="agreeE" >
+                    <mat-radio-button [value]="true">CONCORDO</mat-radio-button>
+                    <mat-radio-button [value]="false" style="margin-left: 10px;">DISCORDO</mat-radio-button>
+                  </mat-radio-group>
+                  <div style="margin-top: 10px;" *ngIf="!agreeE">
+                    <p>Informe os detalhes da escolha:</p>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Motivo</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="explainE" ></textarea>
+                  </mat-form-field>
+                  <mat-form-field style="width: 99%;">
+                    <mat-label>Sugestão de nova redação</mat-label>
+                    <textarea matInput placeholder="" maxlength="200" [(ngModel)]="suggestE" ></textarea>
+                  </mat-form-field>
+                </div>
+            </div>
+            <div class="column" style="display: flex; justify-content: center; align-items: center;">
+                <mat-card style="width: 80%;">
+                    <mat-card-header>
+                      <mat-card-title>{{titleE}}</mat-card-title>
+                      <mat-card-subtitle>Redação</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{textE}}</p>
+                    </mat-card-content>
+                  </mat-card>
+            </div>
+          </div>
+        <div>
+            <button mat-raised-button color="primary" (click)="goPreviousStep()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="validateStepE()">Finalizar</button>
+        </div>
+      </mat-step>
+    
+  </mat-stepper>
+
+  <div style="margin: 10px;" *ngIf="showFinale">
+   
+    <div>
+    <h3>FINALIZAR AVALIAÇÃO DO ELEMENTO</h3>
+
+    <p>Revise as informações e clique no botão 'ENVIAR'.</p>
+    
+    <mat-card style="max-width: 680px; margin-bottom: 10px;">
+      <mat-card-header>
+        <mat-card-title>{{titleA}}</mat-card-title>
+        <mat-card-subtitle><i>"{{textA}}"</i></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="margin-top:10px;"><b>PARECER</b>: <span *ngIf="agreeA">CONCORDO</span><span style="color:#B02304" *ngIf="!agreeA">DISCORDO</span></p>
+        <p *ngIf="!agreeA"><b>Motivo: </b> <br><span>{{explainA}}</span></p>
+        <p *ngIf="!agreeA"><b>Redação sugerida: </b> <br><span>{{suggestA}}</span></p>
+      </mat-card-content>
+      <mat-card-actions style="justify-content: flex-end;">
+        <button mat-button (click)="goEdit(0)">Editar</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card style="max-width: 680px; margin-bottom: 10px;">
+      <mat-card-header>
+        <mat-card-title>{{titleB}}</mat-card-title>
+        <mat-card-subtitle><i>"{{textB}}"</i></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="margin-top:10px;"><b>PARECER</b>: <span *ngIf="agreeB">CONCORDO</span><span style="color:#B02304" *ngIf="!agreeB">DISCORDO</span></p>
+        <p *ngIf="!agreeB"><b>Motivo: </b> <br><span>{{explainB}}</span></p>
+        <p *ngIf="!agreeB"><b>Redação sugerida: </b> <br><span>{{suggestB}}</span></p>
+      </mat-card-content>
+      <mat-card-actions style="justify-content: flex-end;">
+        <button mat-button (click)="goEdit(1)">Editar</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card style="max-width: 680px; margin-bottom: 10px;">
+      <mat-card-header>
+        <mat-card-title>{{titleC}}</mat-card-title>
+        <mat-card-subtitle><i>"{{textC}}"</i></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="margin-top:10px;"><b>PARECER</b>: <span *ngIf="agreeC">CONCORDO</span><span style="color:#B02304" *ngIf="!agreeC">DISCORDO</span></p>
+        <p *ngIf="!agreeC"><b>Motivo: </b> <br><span>{{explainC}}</span></p>
+        <p *ngIf="!agreeC"><b>Redação sugerida: </b> <br><span>{{suggestC}}</span></p>
+      </mat-card-content>
+      <mat-card-actions style="justify-content: flex-end;">
+        <button mat-button (click)="goEdit(2)">Editar</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card style="max-width: 680px; margin-bottom: 10px;">
+      <mat-card-header>
+        <mat-card-title>{{titleD}}</mat-card-title>
+        <mat-card-subtitle><i>"{{textD}}"</i></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="margin-top:10px;"><b>PARECER</b>: <span *ngIf="agreeD">CONCORDO</span><span style="color:#B02304" *ngIf="!agreeD">DISCORDO</span></p>
+        <p *ngIf="!agreeD"><b>Motivo: </b> <br><span>{{explainD}}</span></p>
+        <p *ngIf="!agreeD"><b>Redação sugerida: </b> <br><span>{{suggestD}}</span></p>
+      </mat-card-content>
+      <mat-card-actions style="justify-content: flex-end;">
+        <button mat-button (click)="goEdit(3)">Editar</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card style="max-width: 680px; margin-bottom: 10px;">
+      <mat-card-header>
+        <mat-card-title>{{titleE}}</mat-card-title>
+        <mat-card-subtitle><i>"{{textE}}"</i></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="margin-top:10px;"><b>PARECER</b>: <span *ngIf="agreeE">CONCORDO</span><span style="color:#B02304" *ngIf="!agreeE">DISCORDO</span></p>
+        <p *ngIf="!agreeE"><b>Motivo: </b> <br><span>{{explainE}}</span></p>
+        <p *ngIf="!agreeE"><b>Redação sugerida: </b> <br><span>{{suggestE}}</span></p>
+      </mat-card-content>
+      <mat-card-actions style="justify-content: flex-end;">
+        <button mat-button (click)="goEdit(4)">Editar</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div style="margin-top: 15px; margin-bottom: 10px;">
+      <button mat-raised-button color="basic" (click)="goBackToEdit()">Editar</button>
+      <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="sendInfo()">ENVIAR</button>
+    </div>
+  </div>
+
+  </div>

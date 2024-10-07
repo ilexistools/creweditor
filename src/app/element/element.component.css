@@ -1,0 +1,15 @@
+.example-card {
+    max-width: 300px;
+  }
+  
+  .icon-blue {
+    color:#DDE1ED;
+}
+
+.elements-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens mudem para a linha seguinte se não houver espaço suficiente. */
+    justify-content: space-around; /* Distribui espaço antes, entre e depois dos itens. */
+    align-items: stretch; /* Estica os itens para preencher o contêiner ao longo do eixo cruzado. */
+  }
+  

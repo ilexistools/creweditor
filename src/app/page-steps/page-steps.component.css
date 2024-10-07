@@ -1,0 +1,26 @@
+.container-page{
+    margin:20px;
+}
+
+.field-level {
+    width: 400px; /* Permite que o campo se ajuste à largura do select */
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* Faz o contêiner ocupar a altura total da viewport */
+}
+
+.doc-container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow: auto;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+  

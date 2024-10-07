@@ -1,0 +1,116 @@
+<mat-card class="crew-card">
+  <mat-card-header>
+    <div style="flex-grow: 1; display: flex; align-items: center;">
+      <mat-icon mat-card-avatar style="color:#20d422">group</mat-icon>
+      <mat-card-title style="margin-left: 8px;">{{data.name}}</mat-card-title>
+    </div>
+
+    <button mat-icon-button (click)="isCollapsed = !isCollapsed">
+      <mat-icon>{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+    </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onUp()">
+        <mat-icon>arrow_upwards</mat-icon>
+        <span>Subir</span>
+      </button>
+
+      <button mat-menu-item (click)="onDown()">
+        <mat-icon>arrow_downward</mat-icon>
+        <span>Descer</span>
+      </button>
+
+      <button mat-menu-item (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+        <span>Excluir</span>
+      </button>
+    </mat-menu>
+  </mat-card-header>
+
+  <mat-card-content style="margin-top: 15px;">
+    <div [hidden]="isCollapsed">
+
+      <!-- Agents Section -->
+      <form>
+        <mat-form-field class="crew-chip-list">
+          <mat-label>Agentes</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Agent selection">
+            <mat-chip-row *ngFor="let agent of data.agents; track agent" (removed)="removeAgent(agent)">
+              {{agent}}
+              <button matChipRemove [attr.aria-label]="'remove ' + agent">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input placeholder="Inserir Agente..." #agentInput [formControl]="agentCtrl"
+                 [matChipInputFor]="chipGrid" [matAutocomplete]="autoAgent"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 (matChipInputTokenEnd)="addAgent($event)" />
+          <mat-autocomplete #autoAgent="matAutocomplete" (optionSelected)="selectedAgent($event)">
+            <mat-option *ngFor="let agent of filteredAgents | async; track agent" [value]="agent">
+              {{agent}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+      <!-- Tasks Section -->
+      <form>
+        <mat-form-field class="crew-chip-list">
+          <mat-label>Tarefas</mat-label>
+          <mat-chip-grid #taskChipGrid aria-label="Task selection">
+            <mat-chip-row *ngFor="let task of data.tasks; track task" (removed)="removeTask(task)">
+              {{task}}
+              <button matChipRemove [attr.aria-label]="'remove ' + task">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input placeholder="Inserir Tarefa..." #taskInput [formControl]="taskCtrl"
+                 [matChipInputFor]="taskChipGrid" [matAutocomplete]="autoTask"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 (matChipInputTokenEnd)="addTask($event)" />
+          <mat-autocomplete #autoTask="matAutocomplete" (optionSelected)="selectedTask($event)">
+            <mat-option *ngFor="let task of filteredTasks | async; track task" [value]="task">
+              {{task}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Entradas (JSON)</mat-label>
+        <textarea matInput placeholder="Insira o JSON aqui" [(ngModel)]="data.inputs" (ngModelChange)="validateJson()"></textarea>
+        <mat-hint align="end" *ngIf="jsonError" style="color: red;">JSON inválido</mat-hint>
+
+       
+      </mat-form-field>
+    
+      <!-- Processo Selection -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <mat-label style="color: gray; margin-bottom: 8px;">Processo:</mat-label>
+      <mat-radio-group [(ngModel)]="data.process">
+        <mat-radio-button value="sequencial" style="display: block;">Sequencial</mat-radio-button>
+        <mat-radio-button value="hierarchical" style="display: block;">Hierárquico</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  
+ 
+
+      
+      <mat-checkbox [(ngModel)]="data.planning">Habilitar planejamento</mat-checkbox>
+      <mat-checkbox [(ngModel)]="data.memory">Habilitar memória</mat-checkbox>
+
+    
+      
+       
+      
+
+
+    </div>
+  </mat-card-content>
+</mat-card>

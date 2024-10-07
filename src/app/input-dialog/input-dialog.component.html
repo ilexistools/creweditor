@@ -1,0 +1,16 @@
+<h1 mat-dialog-title style="margin: 10px;"> <mat-icon style="margin-top: 10px;">add_circle_outline</mat-icon>  {{data.title}}</h1>
+    <div mat-dialog-content style="margin:10px;">
+      <mat-form-field appearance="fill" style="width: 100%;" >
+        <mat-label>{{data.label}}</mat-label>
+        <input matInput [(ngModel)]="inputData" required maxlength="50" (keydown.enter)="onSubmit()" />
+        <mat-error *ngIf="!inputData">Este campo é obrigatório.</mat-error>
+        <mat-error *ngIf="inputData.length > 50">
+            Limite de 50 caracteres excedido.
+          </mat-error>
+          <mat-hint align="end">{{ 50 - inputData.length }} caracteres restantes</mat-hint>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end" style="margin: 10px;">
+      <button mat-button (click)="onCancel()">Cancelar</button>
+      <button mat-button color="primary" (click)="onSubmit()">Adicionar</button>
+    </div>

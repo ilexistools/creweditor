@@ -1,0 +1,15 @@
+<div style="margin:10px;">
+    <mat-card style="max-width: 300px;">
+        <mat-card-header style="display: flex; align-items: center; justify-content: space-between;">
+          <div mat-card-avatar>
+            <mat-icon class="icon-blue">bubble_chart</mat-icon>
+          </div>
+          <mat-card-title>{{title}}</mat-card-title>
+          <mat-checkbox [disabled]="true" [checked]="isChecked"></mat-checkbox>
+        </mat-card-header>
+        <mat-card-actions style="display: flex;justify-content: center;">
+          <button mat-button (click)="onClickEvent(idNumber)" [disabled]="isDisabled">AVALIAR</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+  

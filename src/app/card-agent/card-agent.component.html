@@ -1,0 +1,86 @@
+<mat-card class="agent-card">
+  <mat-card-header >
+    <div style="flex-grow: 1; display: flex; align-items: center;">
+      <mat-icon mat-card-avatar style="color: #4bb6ec">support_agent</mat-icon>
+      <mat-card-title style="margin-left: 8px;">{{data.name}}</mat-card-title>
+    </div>
+    
+    <button mat-icon-button (click)="isCollapsed = !isCollapsed">
+    <mat-icon >{{ isCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>
+  </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    
+    <mat-menu #menu="matMenu">
+
+      
+
+      <button mat-menu-item (click)="onUp()">
+        <mat-icon>arrow_upwards</mat-icon>
+        <span>Subir</span>
+      </button>
+
+      <button mat-menu-item (click)="onDown()">
+        <mat-icon>arrow_downward</mat-icon>
+        <span>Descer</span>
+      </button>
+
+     
+      <button mat-menu-item (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+        <span>Excluir</span>
+      </button>
+     
+    </mat-menu>
+    
+ 
+ 
+  </mat-card-header>
+  <mat-card-content style="margin-top: 15px;">
+    <div [hidden]="isCollapsed">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Papel</mat-label>
+        <textarea matInput placeholder="" [(ngModel)]="data.role" ></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Objetivo</mat-label>
+        <textarea matInput placeholder="" [(ngModel)]="data.goal"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Contexto</mat-label>
+        <textarea matInput placeholder="" [(ngModel)]="data.backstory"></textarea>
+      </mat-form-field>
+
+      <form>
+        <mat-form-field class="agent-chip-list">
+          <mat-label>Ferramentas</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Tool selection">
+            <mat-chip-row *ngFor="let tool of data.tools; track tool" (removed)="remove(tool)">
+              {{tool}}
+              <button matChipRemove [attr.aria-label]="'remove ' + tool">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input placeholder="Inserir..." #toolInput [formControl]="toolCtrl"
+                 [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 (matChipInputTokenEnd)="add($event)" />
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let tool of filteredTools | async; track tool" [value]="tool">
+              {{tool}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+
+      <mat-checkbox [(ngModel)]="data.delegation">Delegar para outros agentes</mat-checkbox>
+    </div>
+  </mat-card-content>
+  
+</mat-card>

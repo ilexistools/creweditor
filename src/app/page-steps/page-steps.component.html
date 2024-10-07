@@ -1,0 +1,222 @@
+
+<div class='container-page'>
+
+    <div class="spinner-container" *ngIf="showSpinner">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-stepper [linear]="false" #stepper [selectedIndex]="currentStepIndex" *ngIf="!showSpinner">
+
+    <mat-step  [editable]="true" disableRipple>
+      <ng-template matStepLabel>Nível</ng-template>
+
+    <!-- STEP 1 -->
+    <div class="step1" *ngIf="step1">
+        <h4>Selecione o ano da sua turma:</h4>
+        <mat-form-field class='field-level'>
+        <mat-label>Estudantes de </mat-label>
+        <mat-select [(ngModel)]="selectedLevel" (selectionChange)="onSelectionLevelChange($event)">
+            @for (level of levels; track level) {
+            <mat-option [value]="level.value">{{level.viewValue}}</mat-option>
+            }
+        </mat-select>
+        </mat-form-field>
+
+        <h4>Selecione o que planeja ensinar:</h4>
+
+        <mat-accordion>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Programação
+                </mat-panel-title>
+                <mat-panel-description>
+                    <p>Objetivos de Aprendizagem e Desenvolvimento: {{pdata.selectedOptions.selected.length}}</p>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-selection-list #pdata>
+                @for (pdata of pData; track pdata) {
+                  <mat-list-option [value]="pdata">- {{pdata.objetivo}}</mat-list-option>
+                }
+            </mat-selection-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Tecnologias da Informação e Comunicação
+                </mat-panel-title>
+                <mat-panel-description>
+                    <p>Objetivos de Aprendizagem e Desenvolvimento: {{tdata.selectedOptions.selected.length}}</p>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-selection-list #tdata>
+                @for (tdata of tData; track tdata) {
+                  <mat-list-option [value]="tdata">- {{tdata.objetivo}}</mat-list-option>
+                }
+            </mat-selection-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Letramento Digital
+                </mat-panel-title>
+                <mat-panel-description>
+                    <p>Objetivos de Aprendizagem e Desenvolvimento: {{ddata.selectedOptions.selected.length}}</p>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-selection-list #ddata>
+                @for (ddata of dData; track ddata) {
+                  <mat-list-option [value]="ddata">- {{ddata.objetivo}}</mat-list-option>
+                }
+            </mat-selection-list>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <h4 style="margin-top: 20px;">Selecione possíveis estratégias de ensino:</h4>
+        <mat-accordion>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Metodologia
+                </mat-panel-title>
+                <mat-panel-description>
+                    <p>Estratégias de ensino: {{sdata.selectedOptions.selected.length}}</p>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-selection-list #sdata>
+                @for (sdata of strategies; track sdata) {
+                  <mat-list-option [value]="sdata">- {{sdata.strategy}}</mat-list-option>
+                }
+            </mat-selection-list>
+            </mat-expansion-panel>
+            </mat-accordion>
+
+        <div style="margin-top: 15px;">
+            <button mat-raised-button color="basic" (click)="reloadPage()">Reiniciar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="gotoStep2()">Próxima</button>
+        </div>
+
+    </div>
+  </mat-step>
+
+  <mat-step  [editable]="true" disableRipple>
+    <ng-template matStepLabel>Tarefa</ng-template>
+     <!-- STEP 2 -->
+    <div class="step2" *ngIf="step2">
+        <h4>Defina a tarefa final que os estudantes realizarão:</h4>
+    
+        <mat-form-field style="width: 80%;min-height: 130px;">
+            <mat-label>Tarefa final</mat-label>
+            <textarea matInput placeholder="" [(ngModel)]="finalTask" style="min-height: 130px;"></textarea>
+        </mat-form-field>
+       
+
+        <h4 style="margin-top: 1px;">Selecione os recursos educacionais que serão utilizados:</h4>
+        <mat-accordion>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Recursos
+                </mat-panel-title>
+                <mat-panel-description>
+                    <p>Plataformas, ferramentas e aplicativos: {{rdata.selectedOptions.selected.length}}</p>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-selection-list #rdata>
+                @for (rdata of resources; track rdata) {
+                  <mat-list-option [value]="rdata">- {{rdata.resource}}</mat-list-option>
+                }
+            </mat-selection-list>
+            </mat-expansion-panel>
+            </mat-accordion>
+
+        <h4 style="margin-top: 20px;">Tipo de planejamento:</h4>
+        <mat-radio-group [formControl]="planType">
+            <mat-radio-button value="1">Atividade de uma aula</mat-radio-button>
+            <mat-radio-button value="2" style="margin-left: 15px;">Sequência didática ou projeto</mat-radio-button>
+        </mat-radio-group>
+        
+        <div style="margin-top: 15px;">
+            <button mat-raised-button color="basic" (click)="backtoStep1()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="gotoStep3()">Próxima</button>
+        </div>
+    
+    </div>
+    </mat-step>
+
+    <mat-step  [editable]="true" disableRipple>
+      <ng-template matStepLabel>Habilidades</ng-template>
+     <!-- STEP 3 -->
+    <div class="step3" *ngIf="step3">
+        <h4>Liste o que os estudantes aprenderão:</h4>
+        <mat-form-field style="width: 80%;min-height: 300px;">
+            <mat-label>Habilidades e conhecimentos</mat-label>
+            <textarea matInput placeholder="" [(ngModel)]="abilities" style="min-height: 300px;"></textarea>
+        </mat-form-field>
+        <div style="margin-top: 15px;">
+            <button mat-raised-button color="basic" (click)="backtoStep2()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="gotoStep4()">Próxima</button>
+        </div>
+    </div>
+    </mat-step>
+
+    <mat-step  [editable]="true" disableRipple>
+      <ng-template matStepLabel>Procedimentos</ng-template>
+     <!-- STEP 4 -->
+    <div class="step4" *ngIf="step4">
+        <h4>Liste os procedimentos da aula ou sequência didática:</h4>
+        <mat-form-field style="width: 80%; min-height: 320px;">
+            <mat-label>Passos</mat-label>
+            <textarea matInput placeholder="" [(ngModel)]="procedures" style="min-height: 320px;"></textarea>
+        </mat-form-field>
+        <div style="margin-top: 15px;">
+            <button mat-raised-button color="basic" (click)="backtoStep3()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="gotoStep5()">Próxima</button>
+        </div>
+    </div>
+    </mat-step>
+
+    <mat-step  [editable]="true" disableRipple>
+      <ng-template matStepLabel>Avaliação</ng-template>
+     <!-- STEP 5 -->
+     <div class="step5" *ngIf="step5">
+        <h4>Descreva os procedimentos de avaliação:</h4>
+        <mat-form-field style="width: 80%; min-height: 180px;">
+            <mat-label>Avaliação</mat-label>
+            <textarea matInput placeholder="" [(ngModel)]="evaluation" style="min-height: 180px;"></textarea>
+        </mat-form-field>
+        <div style="margin-top: 15px;">
+            <button mat-raised-button color="basic" (click)="backtoStep4()">Voltar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="gotoFinal()">Finalizar</button>
+        </div>
+    </div>
+    </mat-step>
+
+
+  <mat-step  [editable]="true" disableRipple>
+    <ng-template matStepLabel>Finalização</ng-template>
+     <!-- FINAL -->
+     <div class="stepFinal" *ngIf="stepFinal">
+       <div class="doc-container">
+        <mat-card>
+          <mat-card-content [innerHTML]="currentHtml">
+
+          </mat-card-content>
+        </mat-card>
+       </div>
+        <div style="margin-top: 15px;">
+            <button mat-raised-button color="basic" (click)="reloadPage()">Reiniciar</button>
+            <button mat-raised-button color="primary" style="margin-left: 25px;" (click)="downloadDoc()">Baixar</button>
+        </div>
+    </div>
+  </mat-step>
+</mat-stepper>
+  
+  
+
+</div>

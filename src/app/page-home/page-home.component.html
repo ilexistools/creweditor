@@ -1,0 +1,75 @@
+<mat-toolbar  style="min-height: 70px; background-color: white;">
+    <img src="assets/sme.png" alt="Menu" style="width: 60px; height: 60px;">
+   <span style="margin-left: 15px;margin-top: 10px;">EDITOR DE AGENTES - IA</span>
+   
+   <span class="toolbar-spacer"></span>
+
+   <button mat-fab  class="custom-fab-agent" style="margin-left: 25px;" (click)="openAgentDialog();" aria-label="">
+    <mat-icon>support_agent</mat-icon>
+  </button>
+
+  <button mat-fab  class="custom-fab-task" style="margin-left: 15px;" (click)="openTaskDialog();" aria-label="">
+    <mat-icon>assignment_turned_in</mat-icon>
+  </button>
+
+
+   <button mat-fab color="" class="custom-fab-crew" style="margin-left: 15px;" (click)="openCrewDialog()" aria-label="">
+     <mat-icon>group</mat-icon>
+   </button>
+
+  
+
+   <button mat-icon-button style="margin-left: 25px;"class="example-icon" (click)="copyToClipboard()" aria-label="">
+    <mat-icon style="color:deeppink">help</mat-icon>
+  </button>
+ 
+ </mat-toolbar>
+ 
+
+ <div class="kanban-container" style="background-color: white;">
+   
+    <!-- Coluna de Agentes -->
+    <div class="kanban-column" style="background-color: #ddf1fb;">
+        <h2 style="color:white"><mat-icon>support_agent</mat-icon></h2>
+      <div *ngFor="let agent of agents" class="kanban-item">
+        <app-card-agent [data]="agent" 
+        (deleteAgent)="handleAgentDelete($event)" 
+        (goUp)="handleAgentUp($event)" 
+        (goDown)="handleAgentDown($event)" 
+        ></app-card-agent>
+      </div>
+    </div>
+  
+    <!-- Coluna de Tarefas -->
+    <div class="kanban-column" style="background-color: #faeee0;">
+        <h2 style="color:white"><mat-icon>assignment_turned_in</mat-icon></h2>
+        <div *ngFor="let task of tasks" class="kanban-item">
+          <app-card-task [data]="task" #cardTaskComponent
+          (deleteTask)="handleTaskDelete($event)"
+          (goUp)="handleTaskUp($event)"  
+          (goDown)="handleTaskDown($event)"  
+          ></app-card-task>
+        </div>
+    </div>
+  
+    <!-- Coluna de Equipes (Crews) -->
+    <div class="kanban-column" style="background-color: #ecf4ec;">
+        <h2 style="color:white"><mat-icon>group</mat-icon></h2>
+        <div *ngFor="let crew of crews" class="kanban-item">
+          <app-card-crew [data]="crew" #cardCrewComponent
+          (deleteCrew)="handleCrewDelete($event)"
+          (goUp)="handleCrewUp($event)"  
+          (goDown)="handleCrewDown($event)"  
+          ></app-card-crew>
+        </div>
+    </div>
+
+
+  </div>
+  
+
+
+
+
+
+

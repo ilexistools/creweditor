@@ -50,6 +50,7 @@ export class CardCrewComponent implements OnInit {
   @Output() goUp = new EventEmitter<any>();
   @Output() goDown = new EventEmitter<any>();
   @Output() copyCrew =  new EventEmitter<any>();
+  @Output() downloadCrew =  new EventEmitter<any>();
 
   isCollapsed: boolean = false;
 
@@ -145,6 +146,15 @@ export class CardCrewComponent implements OnInit {
   onCopyCrew(){
     this.copyCrew.emit(this.data);
   }
+
+  onDownloadCrew(){
+    this.downloadCrew.emit(this.data);
+  }
+
+  onColabCrew(){
+
+  }
+
 
 
 

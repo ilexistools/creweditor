@@ -19,7 +19,7 @@
 
 
 
-   <button mat-icon-button style="margin-left: 25px;"class="example-icon" (click)="copyToClipboard()" aria-label="">
+   <button mat-icon-button style="margin-left: 25px;"class="example-icon"  aria-label="">
     <mat-icon style="color:deeppink">help</mat-icon>
   </button>
 
@@ -61,6 +61,7 @@
           (goUp)="handleCrewUp($event)"
           (goDown)="handleCrewDown($event)"
           (copyCrew)="handleCopyCrew($event)"
+           (downloadCrew)="handleDownloadCrew($event)"
           ></app-card-crew>
         </div>
     </div>

@@ -94,7 +94,7 @@
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <mat-label style="color: gray; margin-bottom: 8px;">Processo:</mat-label>
       <mat-radio-group [(ngModel)]="data.process">
-        <mat-radio-button value="sequencial" style="display: block;">Sequencial</mat-radio-button>
+        <mat-radio-button value="sequential" style="display: block;">Sequencial</mat-radio-button>
         <mat-radio-button value="hierarchical" style="display: block;">Hierárquico</mat-radio-button>
       </mat-radio-group>
     </div>
@@ -110,8 +110,19 @@
 
   <div  [hidden]="isCollapsed">
     <mat-card-actions >
-        <button mat-button (click)="onCopyCrew()">COPIAR</button>
-        <button mat-button>BAIXAR</button>
+      <button mat-button style="margin-left: 5px;" (click)="onCopyCrew()">
+        <mat-icon>content_copy</mat-icon>
+        COPIAR
+      </button>
+      <button mat-button style="margin-left: 5px;" (click)="onDownloadCrew()">
+        <mat-icon>download</mat-icon>
+        BAIXAR
+      </button>
+      <button mat-button style="margin-left: 5px;" (click)="onColabCrew()">
+        <mat-icon>cloud</mat-icon>
+        GOOGLE COLAB
+      </button>
+
     </mat-card-actions>
   </div>
 

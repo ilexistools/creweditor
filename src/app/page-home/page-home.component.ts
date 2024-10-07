@@ -134,8 +134,8 @@ export class PageHomeComponent {
       id: this.agents.length + 1,
       name: 'Tradutor',
       role: 'Tradutor de textos',
-      goal: 'Traduzir textos do inglês para português',
-      backstory: 'Experiente tradutor de textos técnicos',
+      goal: 'Traduzir textos do inglês para português.',
+      backstory: 'Experiente tradutor de textos técnicos.',
       delegation: true,
       tools: [],
       allTools: this.allTools,
@@ -143,29 +143,16 @@ export class PageHomeComponent {
       isCollapsed:true
     }
 
-    const  ag2 = {
-      id: this.agents.length + 1,
-      name: 'Escritor',
-      role: 'Escritor de textos',
-      goal: 'Escrever um capítulo de romance',
-      backstory: 'Experiente escritor de romances sobre amor',
-      delegation: false,
-      tools: [],
-      allTools: this.allTools,
-      order:2,
-      isCollapsed:true
-    }
-
     this.agents.push(ag1);
-    this.agents.push(ag2);
+
 
     const  task1 = {
       id: this.tasks.length + 1,
-      name: 'Escrita de livro',
-      agent: 'Escritor',
+      name: 'Traduzir',
+      agent: 'tradutor',
       agents: [],
-      description: 'Realizar a escrita de um capítulo de romance',
-      expectedOutput: 'Um parágrafo',
+      description: 'Realizar a tradução de {texto}, mantendo os significados.',
+      expectedOutput: 'O texto traduzido em português.',
       context:'',
       tasks: [],
       async: false,
@@ -182,13 +169,13 @@ export class PageHomeComponent {
 
     const  crew1 = {
       id: this.crews.length + 1,
-      name: 'Minha Equipe',
-      agents: [],
-      tasks: [],
+      name: 'Tradutores',
+      agents: ['tradutor'],
+      tasks: ['traduzir'],
       planning: false,
       memory: false,
-      process: 'sequencial',
-      inputs: '',
+      process: 'sequential',
+      inputs: '{"texto": "The book is on the table."',
       allAgents: this.getAgents(),
       allTasks: this.getTasks(),
       allTools: this.allTools,
@@ -455,9 +442,27 @@ getTasks(){
   }
 
   handleCopyCrew(crew: Crew) {
-   // this.crews = this.crews.filter(a => a.id !== crew.id);
-    //this.updateChipsData();
+    const agentsCode = this.createAgentsCode();
+    const tasksCode = this.createTasksCode();
+    const crewsCode = this.createCrewsCode(crew);
+    const text = agentsCode + tasksCode + crewsCode;
     console.log(crew);
+    this.copyToClipboard(text);
+  }
+
+  handleDownloadCrew(crew: Crew){
+    const agentsCode = this.createAgentsCode();
+    const tasksCode = this.createTasksCode();
+    const crewsCode = this.createCrewsCode(crew);
+    const text = agentsCode + tasksCode + crewsCode;
+    console.log(crew);
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'code.py';
+    a.click();
+    window.URL.revokeObjectURL(url); // Libera o objeto do URL após o download
   }
 
 
@@ -546,27 +551,49 @@ getTasks(){
 
   }
 
-  createCrewsCode(){
+  createCrewsCode(crew: Crew){
     const ident = "    ";
     let arr = [];
 
     arr.push('equipe = Crew(')
+    arr.push(ident + 'agents=[' + crew.agents.join(',') + '],');
+    arr.push(ident + 'tasks=[' + crew.tasks.join(',') + '],');
+    if (crew.memory == true)
+    {
+      arr.push(ident + 'memory=True,');
+    }else{
+      arr.push(ident + 'memory=False,');
+    }
+    if (crew.planning == true)
+    {
+        arr.push(ident + 'planning=True,');
+    }else{
+        arr.push(ident + 'planning=False,');
+    }
+    if (crew.process == 'sequential')
+    {
+      arr.push(ident + 'process=Process.sequential,');
+    }else{
+      arr.push(ident + 'process=Process.hierarchical,');
+    }
+    arr.push(ident + 'verbose=True,');
+    arr.push(')\n');
+    arr.push('# Inicia o processo')
+    if (crew.inputs.length != 0)
+    {
+      arr.push('equipe.kickoff(inputs=' + crew.inputs + ")")
+    }else{
+      arr.push('equipe.kickoff(inputs={})')
+    }
 
 
-
-
-    arr.push(')');
     let result = '# Define a equipe\n\n' + arr.join('\n') + '\n';
     return result;
   }
 
 
 
-   copyToClipboard() {
-    this.updateChipsData();
-    const agentsCode = this.createAgentsCode();
-    const tasksCode = this.createTasksCode();
-    const text = agentsCode + tasksCode
+   copyToClipboard(text:string) {
     navigator.clipboard.writeText(text)
       .then(() => {
         console.log('Texto copiado para a área de transferência');

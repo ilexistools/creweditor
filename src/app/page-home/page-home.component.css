@@ -16,7 +16,7 @@
     justify-content: space-around; /* Distribui espaço antes, entre e depois dos itens. */
     align-items: stretch; /* Estica os itens para preencher o contêiner ao longo do eixo cruzado. */
   }
-  
+
   .login-card {
     max-width: 400px;
     margin: auto;
@@ -25,18 +25,18 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
+
   mat-form-field {
     width: 100%;
     margin-bottom: 16px;
   }
-  
+
 
   .custom-fab-agent {
     background-color: #4bb6ec; /* Cor de fundo personalizada */
     color: white; /* Cor do ícone */
   }
-  
+
   .custom-fab-agent:hover {
     background-color: #0f76aa; /* Cor de fundo ao passar o mouse */
   }
@@ -45,16 +45,16 @@
     background-color: #fd9118; /* Cor de fundo personalizada */
     color: white; /* Cor do ícone */
   }
-  
+
   .custom-fab-task:hover {
     background-color: #f07f00; /* Cor de fundo ao passar o mouse */
   }
-  
+
   .custom-fab-crew {
     background-color: #20d422; /* Cor de fundo personalizada */
     color: white; /* Cor do ícone */
   }
-  
+
   .custom-fab-crew:hover {
     background-color: #10a311; /* Cor de fundo ao passar o mouse */
   }
@@ -67,7 +67,7 @@
     padding: 20px;
     background-color: #f5f5f5; /* Cor de fundo opcional */
   }
-  
+
   .kanban-column {
     flex: 1; /* Cada coluna ocupa igual espaço */
     background-color: #ffffff;
@@ -76,16 +76,25 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-height: 80vh; /* Altura máxima para rolagem */
     overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+
+    display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente */
   }
-  
+
   .kanban-column h2 {
     text-align: center;
     margin-bottom: 15px;
     color: #333333;
   }
-  
+
   .kanban-item {
     margin-bottom: 15px;
+
+
+  width: 100%; /* Ocupa toda a largura da coluna */
+  max-width: 600px; /* Tamanho máximo para manter centralizado, ajuste conforme necessário */
+  min-width: 320px; /* Tamanho mínimo para estado colapsado */
+  transition: width 0.3s ease; /* Transição suave para o estado colapsado */
   }
-  
-  
+

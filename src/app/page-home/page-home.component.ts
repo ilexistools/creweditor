@@ -100,7 +100,7 @@ export interface Crew{
     InputDialogComponent,
     CardTaskComponent,
     CardCrewComponent,
-    
+
 ],
   templateUrl: './page-home.component.html',
   styleUrl: './page-home.component.css',
@@ -199,14 +199,14 @@ export class PageHomeComponent {
 
     this.crews.push(crew1);
 
-   
+
   }
 
   normalizeToCamelCase(input: string): string {
     // Function to remove accents
     const removeAccents = (str: string) =>
       str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  
+
     // Function to convert to camelCase
     const toCamelCase = (str: string) =>
       str
@@ -214,16 +214,16 @@ export class PageHomeComponent {
           index === 0 ? match.toLowerCase() : match.toUpperCase()
         )
         .replace(/\s+/g, ""); // Remove spaces
-  
+
     // Normalize the input by removing accents and trimming spaces
     const normalized = removeAccents(input.trim());
-  
+
     // Convert to camelCase
     const camelCase = toCamelCase(normalized);
-  
+
     // Remove any non-alphanumeric characters that are not underscores or dollar signs
     const validVariableName = camelCase.replace(/[^a-zA-Z0-9_$]/g, "");
-  
+
     return validVariableName;
   }
 
@@ -231,7 +231,7 @@ export class PageHomeComponent {
         const dialogRef = this.dialog.open(InputDialogComponent, {
           width: '344px',
           height: '224px',
-          data: { 
+          data: {
             title: 'Adicionar agente...',
             label: 'Nome do agente',
             type: 'agent'
@@ -244,7 +244,7 @@ export class PageHomeComponent {
         const total = this.agents.length + 1;
         this.agents.push({
           id: this.agents.length + 1,
-          name: result, 
+          name: result,
           role: '',
           goal: '',
           backstory: '',
@@ -255,16 +255,16 @@ export class PageHomeComponent {
           isCollapsed: true,
         });
         this.updateChipsData();
-      } 
+      }
     });
   }
 
   openTaskDialog(): void {
-   
+
     const dialogRef = this.dialog.open(InputDialogComponent, {
       width: '344px',
       height: '224px',
-      data: { 
+      data: {
         title: 'Adicionar tarefa...',
         label: 'Nome da tarefa',
         type: 'task'
@@ -293,16 +293,16 @@ dialogRef.afterClosed().subscribe(result => {
       isCollapsed:true
     });
     this.updateChipsData();
-  } 
+  }
 });
- 
+
 }
 
 openCrewDialog(): void {
   const dialogRef = this.dialog.open(InputDialogComponent, {
     width: '344px',
     height: '224px',
-    data: { 
+    data: {
       title: 'Adicionar equipe...',
       label: 'Nome da equipe',
       type: 'crew'
@@ -327,7 +327,7 @@ if (result !== undefined && result.trim() !== '') {
 
   });
   this.updateChipsData();
-} 
+}
 });
 }
 
@@ -347,7 +347,7 @@ getTasks(){
   return allTasks;
 }
 
- 
+
 
   handleAgentDelete(agent: Agent) {
     this.agents = this.agents.filter(a => a.id !== agent.id);
@@ -365,7 +365,7 @@ getTasks(){
   }
 
 
-  
+
   handleAgentUp(agent: Agent) {
   // Encontrar o índice do agente na lista de agentes
   const index = this.agents.findIndex(a => a === agent);
@@ -380,7 +380,7 @@ getTasks(){
   // Atualizar a ordem dos agentes (opcional, depende de como a ordem é gerenciada)
   this.agents[index - 1].order -= 1;
   this.agents[index].order += 1;
-  
+
   }
 
   handleTaskUp(task: Task) {
@@ -397,7 +397,7 @@ getTasks(){
     // Atualizar a ordem dos agentes (opcional, depende de como a ordem é gerenciada)
     this.tasks[index - 1].order -= 1;
     this.tasks[index].order += 1;
-    
+
     }
 
     handleCrewUp(crew: Crew) {
@@ -496,7 +496,7 @@ getTasks(){
       arr.push(this.normalizeToCamelCase(task.name) + ' = Task(');
       arr.push(ident + "description='" + task.description + "',");
       arr.push(ident + "expected_output='" + task.expectedOutput + "',");
-      arr.push(ident + "agent=" + this.normalizeToCamelCase(task.agent) + ",");
+      arr.push(ident + "agent='" + task.agent + "',");
       if (task.tools.length != 0)
       {
         let tools = "";
@@ -505,7 +505,22 @@ getTasks(){
         tools+="],";
         arr.push(tools);
       }
-      arr.push(ident + "context=['" + task.context + "'],");
+
+      if (task.tasks.length != 0)
+        {
+          let tasks = "";
+          tasks += "context=["
+          for (const t of task.tasks){
+            tasks+= "'" + t + "',";
+          }
+          tasks+="],";
+          tasks = tasks.replace(',]', ']');
+          arr.push( ident+tasks);
+        }else{
+          arr.push(ident+ 'context=[]');
+        }
+
+
       if (task.async === true)
         {
           arr.push(ident + "async_execution=True,");
@@ -527,7 +542,21 @@ getTasks(){
 
   }
 
-  
+  createCrewsCode(){
+    const ident = "    ";
+    let arr = [];
+
+    arr.push('equipe = Crew(')
+
+
+
+
+    arr.push(')');
+    let result = '# Define a equipe\n\n' + arr.join('\n') + '\n';
+    return result;
+  }
+
+
 
    copyToClipboard() {
     this.updateChipsData();
@@ -542,10 +571,10 @@ getTasks(){
         console.error('Erro ao copiar texto: ', err);
       });
   }
-  
 
-  
- 
+
+
+
 
 
 

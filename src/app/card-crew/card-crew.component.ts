@@ -20,6 +20,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
 
+
 @Component({
   selector: 'app-card-crew',
   standalone: true,
@@ -69,7 +70,10 @@ export class CardCrewComponent implements OnInit {
 
   announcer = inject(LiveAnnouncer);
 
+  
+
   constructor() {
+    
     this.filteredAgents = this.agentCtrl.valueChanges.pipe(
       startWith(''),
       map((agent: string | null) => (agent ? this._filterAgent(agent) : this.allAgents.slice())),
@@ -145,6 +149,7 @@ export class CardCrewComponent implements OnInit {
 
   onCopyCrew(){
     this.copyCrew.emit(this.data);
+  
   }
 
   onDownloadCrew(){

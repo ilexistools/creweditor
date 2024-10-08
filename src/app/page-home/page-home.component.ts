@@ -649,7 +649,65 @@ directory_tool = DirectorySearchTool(directory='./dir')
 
 
 
+    saveDataToFile(): void {
+    const agents = this.agents;
+    const tasks = this.tasks;
+    const crews = this.crews;
 
+    const data = JSON.stringify({  agents, tasks, crews }, null, 2); // Converte os dados para JSON formatado
+    const blob = new Blob([data], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'agentes.txt'; // Nome do arquivo de download
+    a.click();
+  
+    window.URL.revokeObjectURL(url); // Limpa a URL após o download
+  }
+
+ loadDataFromFile(event: any): Promise<{ agents: any[], tasks: any[], crews: any[] }> {
+    return new Promise((resolve, reject) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+  
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result as string);
+          resolve(data);
+        } catch (error) {
+          reject(error);
+        }
+      };
+  
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+  
+      reader.readAsText(file);
+    });
+  }
+  
+
+  onFileChange(event: any) {
+    this.loadDataFromFile(event)
+      .then(data => {
+        this.agents = data.agents;
+        this.tasks = data.tasks;
+        this.crews = data.crews;
+      })
+      .catch(error => {
+        console.error('Erro ao carregar o arquivo:', error);
+      });
+  }
+
+  clearProject(){
+    this.agents = [];
+    this.tasks = [];
+    this.crews  =[];
+  }
+  
+  
 
 
 

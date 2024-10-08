@@ -17,13 +17,31 @@
      <mat-icon>group</mat-icon>
    </button>
 
+   <button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="saveDataToFile()"  aria-label="">
+    <mat-icon style="color:rgb(213, 105, 208)">download</mat-icon>
+  </button>
+
+  <button mat-icon-button style="margin-left: 5px;" class="example-icon" aria-label="Open file" 
+  (click)="fileInput.click()">
+  <mat-icon style="color:rgb(237, 213, 73)">file_open</mat-icon>
+</button>
+
+<!-- Input oculto -->
+<input type="file" #fileInput (change)="onFileChange($event)" style="display: none;" />
 
 
-   <button mat-icon-button style="margin-left: 25px;"class="example-icon"  aria-label="">
+<button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="clearProject()"  aria-label="">
+  <mat-icon style="color:rgb(241, 127, 82)">delete</mat-icon>
+</button>
+
+  
+   <button mat-icon-button style="margin-left: 5px;"class="example-icon"  aria-label="">
     <mat-icon style="color:deeppink">help</mat-icon>
   </button>
 
  </mat-toolbar>
+ 
+
 
 
  <div class="kanban-container" style="background-color: white;">

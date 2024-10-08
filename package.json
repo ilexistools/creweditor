@@ -1,9 +1,11 @@
 {
-  "name": "gpt",
+  "name": "editor",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "electron .",
+    "electron": "ng build --base-href ./ && electron .",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -34,6 +36,7 @@
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.11.20",
+    "electron": "^32.1.2",
     "html-docx-js-typescript": "^0.1.5",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

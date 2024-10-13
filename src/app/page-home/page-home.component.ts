@@ -112,7 +112,7 @@ export class PageHomeComponent {
 
   constructor( public router: Router, private http: ApisService, private _bottomSheet: MatBottomSheet,  private dialog: MatDialog) { }
 
-  allTools: string[] = ['search_tool', 'scrape_tool', 'file_tool', 'mdx_search_tool', 'directory_tool'];
+  allTools: string[] = ['search_tool', 'scrape_tool', 'file_tool', 'mdx_search_tool', 'directory_tool', 'glossary_tool', 'custom_tool_01', 'custom_tool_02','custom_tool_03', 'custom_tool_04', 'custom_tool_05' ];
 
   agents:Agent[]=[];
   tasks:Task[]=[];
@@ -137,15 +137,30 @@ export class PageHomeComponent {
       name: 'Tradutor',
       role: 'Tradutor de textos',
       goal: 'Traduzir textos do inglês para português.',
-      backstory: 'Experiente tradutor de textos técnicos.',
-      delegation: true,
+      backstory: 'Experiente tradutor de textos técnicos de economia.',
+      delegation: false,
       tools: [],
       allTools: this.allTools,
       order:1,
       isCollapsed:true
     }
 
+    const ag2 = {
+      id: this.agents.length + 1,
+      name: 'Revisor',
+      role: 'Revisor de textos',
+      goal: 'Revisar os textos do inglês para português, deixando a linguagem mais simplificada.',
+      backstory: 'Revisor especializado em deixar a linguagem mais clara. Antes de revisar, leia, uma vez, as sugestões da ferramenta glossário.',
+      delegation: false,
+      tools: ['glossary_tool'],
+      allTools: this.allTools,
+      order:1,
+      isCollapsed:true
+    }
+
+
     this.agents.push(ag1);
+    this.agents.push(ag2);
 
 
     const  task1 = {
@@ -153,7 +168,7 @@ export class PageHomeComponent {
       name: 'Traduzir',
       agent: 'tradutor',
       agents: [],
-      description: 'Realizar a tradução de {texto}, mantendo os significados.',
+      description: 'Realizar a tradução de {texto}, mantendo os significados do original.',
       expectedOutput: 'O texto traduzido em português.',
       context:'',
       tasks: [],
@@ -167,17 +182,37 @@ export class PageHomeComponent {
       isCollapsed:true
     }
 
+    const  task2 = {
+      id: this.tasks.length + 1,
+      name: 'Revisar',
+      agent: 'revisor',
+      agents: [],
+      description: 'Realizar a revisão do texto traduzido, simplificando a linguagem para o público em geral.',
+      expectedOutput: 'O texto revisado em linguagem acessível.',
+      context:'',
+      tasks: ['traduzir'],
+      async: false,
+      human: false,
+      tools: [],
+      allAgents: this.getAgents(),
+      allTasks: this.getTasks(),
+      allTools: this.allTools,
+      order:1,
+      isCollapsed:true
+    }
+
     this.tasks.push(task1);
+    this.tasks.push(task2);
 
     const  crew1 = {
       id: this.crews.length + 1,
       name: 'Tradutores',
-      agents: ['tradutor'],
-      tasks: ['traduzir'],
+      agents: ['tradutor', 'revisor'],
+      tasks: ['traduzir', 'revisar'],
       planning: false,
       memory: false,
       process: 'sequential',
-      inputs: '{"texto": "The book is on the table."}',
+      inputs: '{"texto": "Economic volatility, driven by inflationary pressures and tightening monetary policy, poses risks to long-term fiscal sustainability."}',
       allAgents: this.getAgents(),
       allTasks: this.getTasks(),
       allTools: this.allTools,
@@ -187,6 +222,8 @@ export class PageHomeComponent {
     }
 
     this.crews.push(crew1);
+
+  
 
 
   }
@@ -445,20 +482,22 @@ getTasks(){
 
   handleCopyCrew(crew: Crew) {
     const reqCode = this.createRequirementsCode();
+    const glossaryCode = this.createGlossaryToolCode();
     const agentsCode = this.createAgentsCode();
     const tasksCode = this.createTasksCode();
     const crewsCode = this.createCrewsCode(crew);
-    const text = reqCode + agentsCode + tasksCode + crewsCode;
+    const text = reqCode + glossaryCode + agentsCode + tasksCode + crewsCode;
     console.log(crew);
     this.copyToClipboard(text);
   }
 
   handleDownloadCrew(crew: Crew){
     const reqCode = this.createRequirementsCode();
+    const glossaryCode = this.createGlossaryToolCode();
     const agentsCode = this.createAgentsCode();
     const tasksCode = this.createTasksCode();
     const crewsCode = this.createCrewsCode(crew);
-    const text =  reqCode + agentsCode + tasksCode + crewsCode;
+    const text =  reqCode + glossaryCode + agentsCode + tasksCode + crewsCode;
     console.log(crew);
     const blob = new Blob([text], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
@@ -484,12 +523,13 @@ from crewai.process import Process
 
 # Define a chave e modelo de LLM
 import os
-os.environ['OPENAI_API_KEY'] = ''
+os.environ['OPENAI_API_KEY'] = apikey
 os.environ["OPENAI_MODEL_NAME"] = 'gpt-4o-mini'
 
 # Instancia as ferramentas
 os.environ["SERPER_API_KEY"] = ''
 
+from crewai_tools import BaseTool
 from crewai_tools import (
   FileReadTool,
   ScrapeWebsiteTool,
@@ -499,16 +539,53 @@ from crewai_tools import (
 )
 
 os.makedirs('./dir', exist_ok=True)
-open('./output.md', 'w').close()
-open('./search.md', 'w').close()
+open('./dir/output.md', 'w').close()
+open('./dir/search.md', 'w').close()
 
 search_tool = SerperDevTool()
 scrape_tool = ScrapeWebsiteTool()
-file_tool = FileReadTool(file_path='./output.md')
-mdx_search_tool = MDXSearchTool(mdx='./search.md')
+file_tool = FileReadTool(file_path='./dir/output.md')
+mdx_search_tool = MDXSearchTool(mdx='./dir/search.md')
 directory_tool = DirectorySearchTool(directory='./dir')
+
 `
     return result;
+  }
+
+  createGlossaryToolCode(){
+     let result = '';
+    result+= `
+# Cria uma ferramenta personalizada
+class Glossary(BaseTool):
+    name: str = "Glossário de termos simplificados"
+    description: str = "Uma ferramenta para fornecer descrições simplificadas de termos técnicos. "
+
+    def _run(self) -> str:
+          return [
+            "volatilidade econômica = instabilidade econômica",
+            "pressões inflacionárias = aumento de preços",
+            "sustentabilidade fiscal = saúde das contas públicas"
+        ]
+
+glossary_tool = Glossary()
+
+`
+  let has_glossary = false;
+  for (const agent of this.agents) {
+    if (agent.tools.length !== 0) {
+      has_glossary = agent.tools.includes('glossary_tool');
+      if (has_glossary) {
+        break; 
+      }
+    }
+  }
+  if (has_glossary == true)
+  {
+    return result;
+  }else{
+    return "";
+  }
+
   }
 
   createAgentsCode(){

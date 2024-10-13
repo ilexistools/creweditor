@@ -37,7 +37,7 @@
       <!-- Agents Section -->
       <form>
         <mat-form-field class="crew-chip-list">
-          <mat-label>Agentes</mat-label>
+          <mat-label  matTooltip="Uma lista de agentes que fazem parte da equipe."  style="cursor: pointer;">Agentes</mat-label>
           <mat-chip-grid #chipGrid aria-label="Agent selection">
             <mat-chip-row *ngFor="let agent of data.agents; track agent" (removed)="removeAgent(agent)">
               {{agent}}
@@ -61,7 +61,7 @@
       <!-- Tasks Section -->
       <form>
         <mat-form-field class="crew-chip-list">
-          <mat-label>Tarefas</mat-label>
+          <mat-label matTooltip="Uma lista de tarefas atribuídas à equipe."  style="cursor: pointer;">Tarefas</mat-label>
           <mat-chip-grid #taskChipGrid aria-label="Task selection">
             <mat-chip-row *ngFor="let task of data.tasks; track task" (removed)="removeTask(task)">
               {{task}}
@@ -83,7 +83,7 @@
       </form>
 
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Entradas (JSON)</mat-label>
+        <mat-label matTooltip="Entradas que os agentes ou as tarefas precisarão para realizar o processo."  style="cursor: pointer;">Entradas (JSON)</mat-label>
         <textarea matInput placeholder="Insira o JSON aqui" [(ngModel)]="data.inputs" (ngModelChange)="validateJson()"></textarea>
         <mat-hint align="end" *ngIf="jsonError" style="color: red;">JSON inválido</mat-hint>
 
@@ -94,14 +94,14 @@
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
       <mat-label style="color: gray; margin-bottom: 8px;">Processo:</mat-label>
       <mat-radio-group [(ngModel)]="data.process">
-        <mat-radio-button value="sequential" style="display: block;">Sequencial</mat-radio-button>
-        <mat-radio-button value="hierarchical" style="display: block;">Hierárquico</mat-radio-button>
+        <mat-radio-button value="sequential" style="display: block;" matTooltip="Executa tarefas sequencialmente, garantindo que as tarefas sejam concluídas em uma progressão ordenada.">Sequencial</mat-radio-button>
+        <mat-radio-button value="hierarchical" style="display: block;" matTooltip="Organiza as tarefas em uma hierarquia gerencial, onde as tarefas são delegadas e executadas com base em uma cadeia de comando estruturada.">Hierárquico</mat-radio-button>
       </mat-radio-group>
     </div>
 
 
-      <mat-checkbox [(ngModel)]="data.planning">Habilitar planejamento</mat-checkbox>
-      <mat-checkbox [(ngModel)]="data.memory">Habilitar memória</mat-checkbox>
+      <mat-checkbox [(ngModel)]="data.planning" matTooltip="Adiciona a capacidade de planejamento à equipe. Quando ativada antes de cada iteração da equipe, todos os dados da equipe são enviados para um Planejador, que planejará as tarefas, e esse plano será adicionado a cada descrição de tarefa." >Habilitar planejamento</mat-checkbox>
+      <mat-checkbox [(ngModel)]="data.memory" matTooltip="Utilizado para armazenar memórias de execução (memória de curto prazo, longo prazo, memória de entidades).">Habilitar memória</mat-checkbox>
 
       <mat-divider></mat-divider>
     </div>

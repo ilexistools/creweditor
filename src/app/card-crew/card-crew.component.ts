@@ -19,6 +19,7 @@ import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @Component({
@@ -39,7 +40,8 @@ import {MatDividerModule} from '@angular/material/divider';
     CommonModule,
     MatMenuModule,
     MatRadioModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTooltipModule
   ],
   templateUrl: './card-crew.component.html',
   styleUrls: ['./card-crew.component.css']

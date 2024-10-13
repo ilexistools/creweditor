@@ -19,6 +19,7 @@ import {map, startWith} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-card-task',
@@ -37,7 +38,8 @@ import {MatSelectModule} from '@angular/material/select';
     AsyncPipe,
     CommonModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   templateUrl: './card-task.component.html',
   styleUrl: './card-task.component.css'

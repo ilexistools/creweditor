@@ -2,7 +2,7 @@
   <mat-card-header >
     <div style="flex-grow: 1; display: flex; align-items: center;">
       <mat-icon mat-card-avatar style="color: #4bb6ec">support_agent</mat-icon>
-      <mat-card-title style="margin-left: 8px;">{{data.name}}</mat-card-title>
+      <mat-card-title style="margin-left: 8px;" >{{data.name}}</mat-card-title>
     </div>
     
     <button mat-icon-button (click)="isCollapsed = !isCollapsed">
@@ -40,24 +40,24 @@
   </mat-card-header>
   <mat-card-content style="margin-top: 15px;">
     <div [hidden]="isCollapsed">
-      <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Papel</mat-label>
+      <mat-form-field appearance="outline" style="width: 100%;" >
+        <mat-label matTooltip="Função do agente dentro da equipe."  style="cursor: pointer;" >Papel</mat-label>
         <textarea matInput placeholder="" [(ngModel)]="data.role" ></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Objetivo</mat-label>
+        <mat-label matTooltip="O objetivo individual que o agente pretende alcançar."  style="cursor: pointer;">Objetivo</mat-label>
         <textarea matInput placeholder="" [(ngModel)]="data.goal"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Contexto</mat-label>
+        <mat-label  matTooltip="Fornece contexto para o papel e o objetivo do agente, enriquecendo as dinâmicas de interação e colaboração."  style="cursor: pointer;">Contexto</mat-label>
         <textarea matInput placeholder="" [(ngModel)]="data.backstory"></textarea>
       </mat-form-field>
 
       <form>
         <mat-form-field class="agent-chip-list">
-          <mat-label>Ferramentas</mat-label>
+          <mat-label matTooltip="Conjunto de capacidades ou funções que o agente pode utilizar para realizar tarefas."  style="cursor: pointer;" >Ferramentas</mat-label>
           <mat-chip-grid #chipGrid aria-label="Tool selection">
             <mat-chip-row *ngFor="let tool of data.tools; track tool" (removed)="remove(tool)">
               {{tool}}
@@ -79,7 +79,7 @@
       </form>
 
 
-      <mat-checkbox [(ngModel)]="data.delegation">Delegar para outros agentes</mat-checkbox>
+      <mat-checkbox [(ngModel)]="data.delegation" matTooltip="Os agentes podem delegar tarefas ou perguntas uns aos outros, garantindo que cada tarefa seja realizada pelo agente mais adequado.">Delegar para outros agentes</mat-checkbox>
     </div>
   </mat-card-content>
   

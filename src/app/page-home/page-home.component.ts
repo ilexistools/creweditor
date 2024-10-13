@@ -19,6 +19,7 @@ import { CardTaskComponent } from '../card-task/card-task.component';
 import { CardCrewComponent } from '../card-crew/card-crew.component';
 import { MatDialog } from '@angular/material/dialog';
 import { InputDialogComponent } from '../input-dialog/input-dialog.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import {
@@ -100,6 +101,7 @@ export interface Crew{
     InputDialogComponent,
     CardTaskComponent,
     CardCrewComponent,
+    MatTooltipModule
 
 ],
   templateUrl: './page-home.component.html',
@@ -482,7 +484,7 @@ from crewai.process import Process
 
 # Define a chave e modelo de LLM
 import os
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = ''
 os.environ["OPENAI_MODEL_NAME"] = 'gpt-4o-mini'
 
 # Instancia as ferramentas
@@ -707,7 +709,9 @@ directory_tool = DirectorySearchTool(directory='./dir')
     this.crews  =[];
   }
   
-  
+  helpOnGithub(){
+    window.open('https://github.com/ilexistools/creweditor', '_blank');
+  }
 
 
 

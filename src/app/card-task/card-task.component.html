@@ -42,7 +42,7 @@
       <div [hidden]="isCollapsed">
 
         <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Agente responsável</mat-label>
+          <mat-label matTooltip="O agente responsável pela tarefa, designado diretamente ou pelo processo da equipe."  style="cursor: pointer;">Agente responsável</mat-label>
           <mat-select [(ngModel)]="data.agent" name="agent">
             @for (agent of filteredAgents | async; track agent;) {
               <mat-option [value]="agent">{{agent}}</mat-option>
@@ -51,12 +51,12 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Descrição da tarefa</mat-label>
+          <mat-label matTooltip="Uma declaração clara e concisa sobre o que a tarefa envolve."  style="cursor: pointer;">Descrição da tarefa</mat-label>
           <textarea matInput placeholder="" [(ngModel)]="data.description"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label>Saída esperada</mat-label>
+          <mat-label matTooltip="Uma descrição detalhada de como é a conclusão da tarefa."  style="cursor: pointer;">Saída esperada</mat-label>
           <textarea matInput placeholder="" [(ngModel)]="data.expectedOutput"></textarea>
         </mat-form-field>
 
@@ -67,8 +67,8 @@
 
       <!-- Tasks Section -->
       <form>
-        <mat-form-field class="task-chip-list">
-          <mat-label>Tarefas de contexto</mat-label>
+        <mat-form-field class="task-chip-list" >
+          <mat-label matTooltip="Especifica tarefas cujas saídas são utilizadas como contexto para esta tarefa."  style="cursor: pointer;">Tarefas de contexto</mat-label>
           <mat-chip-grid #taskChipGrid aria-label="Task selection">
             <mat-chip-row *ngFor="let task of data.tasks; track task" (removed)="removeTask(task)">
               {{task}}
@@ -93,7 +93,7 @@
     <!-- Tools Section -->
         <form>
           <mat-form-field class="task-chip-list">
-            <mat-label>Ferramentas</mat-label>
+            <mat-label matTooltip="As funções ou capacidades que o agente pode utilizar para realizar a tarefa."  style="cursor: pointer;">Ferramentas</mat-label>
             <mat-chip-grid #chipGrid aria-label="Tool selection">
               <mat-chip-row *ngFor="let tool of data.tools; track tool" (removed)="remove(tool)">
                 {{tool}}
@@ -115,8 +115,8 @@
         </form>
 
 
-        <mat-checkbox [(ngModel)]="data.async">Execução assíncrona</mat-checkbox>
-        <mat-checkbox [(ngModel)]="data.human">Humano revisa</mat-checkbox>
+        <mat-checkbox [(ngModel)]="data.async" matTooltip="A tarefa é executada de forma assíncrona, permitindo o progresso sem precisar aguardar a conclusão.">Execução assíncrona</mat-checkbox>
+        <mat-checkbox [(ngModel)]="data.human" matTooltip="Indica se a tarefa deve envolver revisão humana ao final, útil para tarefas que requerem supervisão humana.">Humano revisa</mat-checkbox>
       </div>
     </mat-card-content>
 

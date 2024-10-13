@@ -20,6 +20,7 @@ import {map, startWith} from 'rxjs/operators';
 
 import {AsyncPipe} from '@angular/common';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -41,7 +42,8 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
     ReactiveFormsModule,
     AsyncPipe,
     CommonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule
   ],
   templateUrl: './card-agent.component.html',
   styleUrl: './card-agent.component.css'

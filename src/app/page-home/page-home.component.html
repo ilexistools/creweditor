@@ -4,24 +4,24 @@
 
    <span class="toolbar-spacer"></span>
 
-   <button mat-fab  class="custom-fab-agent" style="margin-left: 25px;" (click)="openAgentDialog();" aria-label="">
+   <button mat-fab  class="custom-fab-agent" style="margin-left: 25px;" (click)="openAgentDialog();" matTooltip=" + Agente">
     <mat-icon>support_agent</mat-icon>
   </button>
 
-  <button mat-fab  class="custom-fab-task" style="margin-left: 15px;" (click)="openTaskDialog();" aria-label="">
+  <button mat-fab  class="custom-fab-task" style="margin-left: 15px;" (click)="openTaskDialog();" matTooltip=" + Tarefa">
     <mat-icon>assignment_turned_in</mat-icon>
   </button>
 
 
-   <button mat-fab color="" class="custom-fab-crew" style="margin-left: 15px;" (click)="openCrewDialog()" aria-label="">
+   <button mat-fab color="" class="custom-fab-crew" style="margin-left: 15px;" (click)="openCrewDialog()" matTooltip=" + Equipe">
      <mat-icon>group</mat-icon>
    </button>
 
-   <button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="saveDataToFile()"  aria-label="">
+   <button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="saveDataToFile()" matTooltip="Baixar projeto">
     <mat-icon style="color:rgb(213, 105, 208)">download</mat-icon>
   </button>
 
-  <button mat-icon-button style="margin-left: 5px;" class="example-icon" aria-label="Open file" 
+  <button mat-icon-button style="margin-left: 5px;" class="example-icon" matTooltip="Carregar projeto" 
   (click)="fileInput.click()">
   <mat-icon style="color:rgb(237, 213, 73)">file_open</mat-icon>
 </button>
@@ -30,12 +30,12 @@
 <input type="file" #fileInput (change)="onFileChange($event)" style="display: none;" />
 
 
-<button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="clearProject()"  aria-label="">
+<button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="clearProject()"  matTooltip="Limpar">
   <mat-icon style="color:rgb(241, 127, 82)">delete</mat-icon>
 </button>
 
   
-   <button mat-icon-button style="margin-left: 5px;"class="example-icon"  aria-label="">
+   <button mat-icon-button style="margin-left: 5px;"class="example-icon" (click)="helpOnGithub()"   matTooltip="Ajuda" >
     <mat-icon style="color:deeppink">help</mat-icon>
   </button>
 

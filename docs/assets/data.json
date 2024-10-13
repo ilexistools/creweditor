@@ -1,0 +1,53 @@
+[
+    {
+      "id": "hero_001",
+      "name": "Superman",
+      "color": "blue"
+    },
+    {
+      "id": "hero_002",
+      "name": "Batman",
+      "color": "black"
+    },
+    {
+      "id": "hero_003",
+      "name": "Wonder Woman",
+      "color": "red"
+    },
+    {
+      "id": "hero_004",
+      "name": "Flash",
+      "color": "red"
+    },
+    {
+      "id": "hero_005",
+      "name": "Green Lantern",
+      "color": "green"
+    },
+    {
+      "id": "hero_006",
+      "name": "Aquaman",
+      "color": "orange"
+    },
+    {
+      "id": "hero_007",
+      "name": "Cyborg",
+      "color": "silver"
+    },
+    {
+      "id": "hero_008",
+      "name": "Arrow",
+      "color": "green"
+    },
+    {
+      "id": "hero_009",
+      "name": "Black Canary",
+      "color": "black"
+    },
+    {
+      "id": "hero_010",
+      "name": "Hawkman",
+      "color": "gold"
+    }
+  ]
+  
